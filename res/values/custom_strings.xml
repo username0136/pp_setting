@@ -40,6 +40,10 @@
     <!-- Generic stuff used everywhere -->
     <string name="reset">Reset</string>
 
+    <!-- Smart 5G -->
+    <string name="smart_5g_title">Smart 5G</string>
+    <string name="smart_5g_summary">Automatically switch between 5G and 4G to reduce battery consumption</string>
+    
     <!-- Buttons -->
     <string name="button_pref_title">Buttons</string>
     <string name="hardware_keys_home_key_title">Home button</string>
