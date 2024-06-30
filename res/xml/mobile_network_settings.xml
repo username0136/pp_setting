@@ -153,7 +153,7 @@
             settings:keywords="@string/keywords_nr_advanced_calling"
             settings:controller="com.android.settings.network.telephony.NrAdvancedCallingPreferenceController"/>
 
-       <SwitchPreference
+       <SwitchPreferenceCompat
             android:key="smart_5g"
             android:title="@string/smart_5g_title"
             android:persistent="false"
@@ -266,7 +266,7 @@
                 android:title="@string/select_automatically"
                 settings:controller="com.android.settings.network.telephony.gsm.AutoSelectPreferenceController"/>
 
-            <SwitchPreference
+            <SwitchPreferenceCompat
                 android:key="force_lteca_key"
                 android:title="@string/force_lte_ca"
                 android:summary="@string/force_lte_ca_summary"
