@@ -16,12 +16,13 @@
 
 package com.android.settings
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.android.settings.deviceinfo.regulatory.RegulatoryInfo.getRegulatoryInfo
-import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
 
 /**
  * [Activity] that displays regulatory information for the "Regulatory information"
@@ -33,17 +34,34 @@ import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity
  * or add a string resource named "regulatory_info_text" with an HTML version of the required
  * information (text will be centered in the dialog).
  */
-class RegulatoryInfoDisplayActivity : CollapsingToolbarBaseActivity() {
+class RegulatoryInfoDisplayActivity : Activity() {
 
     /** Display the regulatory info graphic in a dialog window. */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val builder = AlertDialog.Builder(this)
+            .setTitle(R.string.regulatory_labels)
+            .setOnDismissListener { finish() }  // close the activity
+            .setPositiveButton(android.R.string.ok, null)
+
         getRegulatoryInfo()?.let {
             val view = layoutInflater.inflate(R.layout.regulatory_info, null)
             val image = view.requireViewById<ImageView>(R.id.regulatoryInfo)
             image.setImageDrawable(it)
-            setContentView(view)
+            builder.setView(view)
+            builder.show()
             return
+        }
+
+        val regulatoryText = resources.getText(R.string.regulatory_info_text)
+        if (regulatoryText.isNotEmpty()) {
+            builder.setMessage(regulatoryText)
+            val dialog = builder.show()
+            // we have to show the dialog first, or the setGravity() call will throw a NPE
+            dialog.findViewById<TextView>(android.R.id.message)?.gravity = Gravity.CENTER
+        } else {
+            // neither drawable nor text resource exists, finish activity
+            finish()
         }
     }
 }
